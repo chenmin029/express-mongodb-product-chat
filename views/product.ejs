@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			html,body{
+				height: 100%;
+				background: url(../public/images/back01.jpg) no-repeat 100% 100%;
+				background-size:cover;
+			}
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.container{
+				width: 100%;
+				height: 100%;
+				
+				position: relative;
+			}
+			.nav{
+				width: 100%;
+				height: 60px;
+				line-height: 60px;
+				border: 1px solid blue;
+			}
+			.user{
+				float: left;
+			}
+			.other{
+				float: right;
+			}
+			.product{
+				width: 400px;
+			}
+			.product ul{
+				width: 400px;
+				margin: 0 auto;
+			}
+			.product ul li{
+				width: 400px;
+				text-align: left;
+				list-style: none;
+			}
+			.comments{
+				margin: 0 auto;
+				width: 400px;
+				text-align: left;
+				/* border: 1px solid blue; */
+			}
+			.pages{
+				text-align: center;
+			}
+			.product{
+				width: 100%;
+				text-align: center;
+			}
+			.cover{
+				width: 100%;
+				height:100%;
+				background-color: black;
+				opacity: 0.4;
+				
+				position: absolute;
+				left: 0;
+				top: 0;
+				
+				display: none;
+			}
+			/* .login{
+				width: 300px;
+				height: 150px;
+				margin: 0 auto;
+				
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				
+				display: none;
+			} */
+			.title{
+				height: 20px;
+				background-color: white;
+				text-align: center;
+				
+				margin-top: 5px;
+				
+				//display:none;
+			}
+			.userlogin{
+				width: 300px;
+				height: 30px;
+				text-align: center;
+			}
+			/* .reg{
+				width: 300px;
+				height: 150px;
+				margin: 0 auto;
+				
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				
+				display: none;
+			} */
+			.userreg{
+				width: 280px;
+				height: 30px;
+				text-align: right;
+				margin-right: 20px;
+				/* border: 1px solid #FF0000; */
+			}
+			
+			.upd{
+				width: 280px;
+				height: 180px;
+				margin: 0 auto;
+				background-color: white;
+				
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				
+				display: none;
+			}
+			.addproduct{
+				width: 300px;
+				height: 300px;
+				margin: 0 auto;
+				text-align: center;
+				background-color: white;
+				
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				
+				display: none;
+			}
+			.productcontent{
+				width: 300px;
+				height: 30px;
+				text-align: center;
+				margin-top:10px;
+			}
+			.chat{
+				width: 300px;
+				height: 260px;
+				border: 1px solid #000000;
+				background-color: #A9A9A9;
+				/* margin: 0 auto; */
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				right: 50px;
+				
+				display: none;
+			}
+			.chattitle{
+				width: 300px;
+				height: 20px;
+			}
+			.chatcontent{
+				width: 300px;
+				height: 100px;
+				
+				margin-top: 5px;
+			}
+			.chatcontent ul{
+				width: 300px;
+				height: 100px;
+				background-color: white;
+				overflow: auto;
+			}
+			#chatcontent li{
+				width: 300px;
+				height: 30px;
+				overflow: auto;
+			}
+			.say{
+				width: 300px;
+				height: 100px;
+				margin-top: 5px;
+			}
+			.say textarea{
+				width: 300px;
+				height: 100px;
+			}
+			.send{
+				width: 300px;
+				height: 30px;
+				text-align: center;
+			}
+			#currpage{
+				width:20px;
+				border: none;
+			}
+			.red{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>		
+		<div class="container">
+			<div class="cover">
+				
+			</div>
+			<div class="nav">
+				<div class="user">
+					<span id="username"><%= username %></span>
+					<button id="btn-logout" type="button">退出登录</button>
+					<button id="btn-removeuser" type="button">注销用户</button>
+					<button id="btn-updpass" type="button">修改密码</button>
+				</div>
+				<div class="other">
+					<input type="text" name="" id="partproductname" value="" placeholder="请输入要搜索的内容" />
+					<button id="btn-searchproduct" type="button">搜索商品</button>
+					<button id="btn-addproduct" type="button">添加商品</button>
+					<button id="btn-chat" type="button">进入聊天室 </button>
+				</div>
+			</div>
+			<div class="product">
+				/* <div>
+					<ul>
+						<li><label>id:</lable><span>22222222</span>
+							<button type="button" onclick="edit(this)">编辑</button>
+							<button type="button" onclick="del(this)">删除</button>
+						</li>
+						<li><label>品名:</lable><span>刮胡刀</span></li>
+						<li><label>规格:</lable><span>20cm*100</span></li>
+						<li><label>价格:</lable><span>200</span></li>
+						<li><label>库存:</lable><span>20</span></li>
+						<li><label>厂家:</lable><span>上海日用品有限公司（上海市霞光路97号）</span></li>
+					</ul>
+					<div class="comments">
+						<input type="text" placeholder="请输入评论"/>
+						<button type="button" onclick="addcomments(this)">评论</button>
+						<button type="button" onclick="addperfects(this)">点赞</button>
+						<span>perfectnum</span>
+					</div>
+					<div>
+						<ul>
+							<li><span>sSADsdSDsd</span></li>
+							<li><span>sSADsdSDsd</span></li>
+							<li><span>sSADsdSDsd</span></li>
+						</ul>
+					</div>
+				</div>
+				<hr /> */
+			</div>
+			<div class="pages">				
+				<label>共</label><span id="totalpage"></span><label>页   </label>
+				<button id="prevpage" type="button">上一页</button>
+				<label>当前第</label><span id="labelcurrpage"></span><label>页</label>
+				<input type="text" name="" id="currpage" value="" />
+				<button id="goto">go</button>				
+				<button id="nextpage" type="button">下一页</button>								
+			</div>
+			<div class="upd">
+				<div class="title">
+				</div>
+				<div class="userreg">
+					<label>账户：</label>
+					<input type="text" name="" id="updusername" value="" placeholder="请输入账户" disabled="disabled"/>
+				</div>
+				<div class="userreg">
+					<label>原密码：</label>
+					<input type="password" name="" id="updorgpassword" value="" placeholder="请输入原密码" />
+				</div>
+				<div class="userreg">
+					<label>新密码：</label>
+					<input type="password" name="" id="updnewpassword" value="" placeholder="请输入新密码" />
+				</div>
+				<div class="userreg">
+					<label>确认密码：</label>
+					<input type="password" name="" id="updconfirmpassword" value="" placeholder="请输入确认新密码" />
+				</div>
+				<div class="userlogin">
+					<button id="btn-updupd" type="button">修改</button>
+					<button id="btn-updclose" type="button">取消</button>
+				</div>
+			</div>
+			<div class="addproduct">
+				<div class="title">
+					<label id="productid"></label>
+				</div>
+				<div class="productcontent">
+					<label>品名:</label>
+					<input type="text" name="" id="productname" value="" />
+				</div>
+				<div class="productcontent">
+					<label>规格:</label>
+					<input type="text" name="" id="productspec" value="" />
+				</div>
+				<div class="productcontent">
+					<label>单位:</label>
+					<input type="text" name="" id="productunit" value="" />
+				</div>
+				<div class="productcontent">
+					<label>价格:</label>
+					<input type="text" name="" id="productprice" value="" />
+				</div>
+				<div class="productcontent">
+					<label>库存:</label>
+					<input type="text" name="" id="productstock" value="" />
+				</div>
+				<div class="productcontent">
+					<label>厂家:</label>
+					<input type="text" name="" id="productcompany" value="" />
+				</div>
+				<div class="userlogin">
+					<button id="btn-productadd" type="button">确定</button>
+					<button id="btn-productaddclose" type="button">取消</button>
+				</div>
+			</div>
+			<div class="chat">
+				<div class="chattitle">
+					<span>欢迎</span><strong><%= username %></strong><span>进入聊天室</span>
+				</div>
+				<div class="chatcontent">
+					<ul id="chatcontent">
+					</ul>
+				</div>
+				<div class="say">
+					<textarea id="sendmsg">
+						
+					</textarea>
+				</div>
+				<div class="send">
+					<button id="btn-sendmsg" type="button">发送</button>
+					<button id="btn-chatclose" type="button">关闭</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../public/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<!-- 引入socket.io框架  自动去node_modules内部寻找-->
+<script src="socket.io/socket.io.js"></script>
+<script type="text/javascript">
+	//添加点赞
+	function addperfects(e){
+		let ospan = $(e).parent().find('span');
+		let perfectNum = parseInt(ospan.text());
+		//console.log(perfectNum);
+		let oli = $(e).parent().parent().find('ul li');
+		let productIdSpan = $(oli).find('span');
+		let productId = productIdSpan[0].innerText;
+		//console.log(productId);
+		let userName = document.getElementById('username').innerText;
+		//console.log(userName);
+		$.ajax({
+			method:'get',
+			url:'http://localhost:8989/addperfetcts',
+			data:{productId:productId,userName:userName},
+			success:function(result){
+				//console.log(ospan);
+				ospan.text(perfectNum + 1);
+			}
+		})
+		
+	}
+	//添加评论功能（目前没有添加用户）
+	function addcomments(e){
+		let oinput = $(e).parent().parent().find('input');
+		let commentsContent = oinput.val();
+		if (commentsContent == ""){
+			alert('请输入评论内容!');
+			return;
+		}
+		let oul = $(e).parent().parent().find('ul');
+		console.log(oul);
+		let oli = $(e).parent().parent().find('ul li');
+		let ospan = $(oli).find('span');
+		let productId = ospan[0].innerText;
+		//console.log(productId);
+		
+		$.ajax({
+			method:'get',
+			url:'http://localhost:8989/addcomments',
+			data:{productId:productId,content:commentsContent},
+			success:function(result){
+				let oli = document.createElement('li');
+				oli.innerText = commentsContent;
+				oul[1].appendChild(oli);
+			}
+		})
+		oinput.val('');
+	}
+	//编辑商品
+	function edit(e){
+		let ospan = $(e).parent().find('span');
+		let productId = ospan[0].innerText;
+		
+		let oul = $(e).parent().parent().parent();
+		let lis = oul.find('li');
+		//console.log(lis);
+		let productName = $(lis[1]).find('span').text();
+		let productSpec = $(lis[2]).find('span').text();
+		let productUnit = $(lis[3]).find('span').text();
+		let productPrice = $(lis[4]).find('span').text();
+		let productStock = $(lis[5]).find('span').text();
+		let productCompany = $(lis[6]).find('span').text();
+		
+		$('.cover').show();
+		$('.addproduct').show();
+		
+		$('#productid').text(productId);
+		
+		$('#productname').val(productName);
+		$('#productspec').val(productSpec);
+		$('#productunit').val(productUnit);
+		$('#productprice').val(productPrice);
+		$('#productstock').val(productStock);
+		$('#productcompany').val(productCompany);
+	}
+	//删除商品
+	function del(e){
+		let span = $(e).parent().find('span');
+		let productId = span[0].innerText;
+		let obj = {productId:productId};
+		
+		$.ajax({
+			method:'get',
+			url:'http://localhost:8989/delproduct',
+			data:obj,
+			success:function(result){
+				if (result.result.n == 1){
+					$().w_getAllProduct('');
+					$().w_getCurrPageData('');
+					//删除评论
+					$.ajax({
+						method:'get',
+						url:'http://localhost:8989/delcomments',
+						data:{productId:productId},
+						success:function(comresult){
+							console.log(comresult);
+						}
+					})
+					//删除点赞
+					$.ajax({
+						method:'get',
+						url:'http://localhost:8989/delperfects',
+						data:{productId:productId},
+						success:function(comresult){
+							//console.log(comresult);
+						}
+					})
+				}
+			}
+		})
+	}
+	//页面准备好之后
+	$(function(){
+		// 初始化框架
+		let socket=io()
+		let totalPage = 1,currPage = 1,pageSize = 2;
+		
+		init();
+		//页面初始化
+		function init(){
+			getAllProduct('');						
+			getCurrPageData('');
+		}
+		function render(data){
+			//设置数据
+			$('.product').empty();
+			for (var i = 0;i<data.length;i++){
+				let productId = data[i]._id;
+				let productcontent = `<div>
+					<ul>
+						<li><label>id:</lable><span>${data[i]._id}</span>
+							<button type="button" onclick="edit(this)">编辑</button>
+							<button type="button" onclick="del(this)">删除</button>
+						</li>
+						<li><label>品名:</lable><span>${data[i].productName}</span></li>
+						<li><label>规格:</lable><span>${data[i].productSpec}</span></li>
+						<li><label>单位:</lable><span>${data[i].productUnit}</span></li>
+						<li><label>价格:</lable><span>${data[i].productPrice}</span></li>
+						<li><label>库存:</lable><span>${data[i].productStock}</span></li>
+						<li><label>厂家:</lable><span>${data[i].productCompany}</span></li>
+					</ul>
+					<div class="comments">
+						<input type="text" placeholder="请输入评论"/>
+						<button type="button" onclick="addcomments(this)">评论</button>
+						<button type="button" onclick="addperfects(this)">点赞</button>`;
+				//先获得点赞数
+				$.ajax({
+					method:'get',
+					url:'http://localhost:8989/getperfects',
+					data:{productId:data[i]._id},
+					success:function(result){
+						let perfectnum = result.length;
+						productcontent += `<span class='red'>${perfectnum}</span>
+							</div>
+							<div>
+								<ul>`;
+						//获得评论
+						$.ajax({
+							method:'get',
+							url:'http://localhost:8989/getcomments',
+							data:{productId: productId},
+							success:function(resultcomments){
+								let comments = "";
+								//console.log(resultcomments);
+								for (var j = 0;j<resultcomments.length;j++){
+									comments += `<li><span>${resultcomments[j].content}</span></li>`;
+								}
+								
+								productcontent += comments;
+								
+								let tail=`</ul>
+												</div>
+											</div>
+											<hr />`;
+								productcontent += tail;								
+								$('.product').append(productcontent);
+							}
+						})
+					}
+				})
+			}
+		}
+		//设置页信息
+		function setPage(data){
+			totalPage = Math.ceil(data.length/pageSize);
+			currPage = 1;
+			//console.log(totalPage);
+			$('#currpage').val(currPage);
+			$('#labelcurrpage').text(currPage);
+			$('#totalpage').text(totalPage);
+		}
+		//获取所有商品信息
+		function getAllProduct(partproductname){
+			let data = {};
+			if (partproductname == ''){
+				data = {"pageSize":pageSize,"currPage":currPage};
+			} else {
+				data = {"pageSize":pageSize,"currPage":currPage,"partProductname":partproductname};
+			}
+			console.log(data);
+			$.ajax({
+				method:'get',
+				url:'http://localhost:8989/getproducts',
+				data:data,
+				success:function(result){
+					//console.log(result);
+					setPage(result);
+				}
+			})
+		}
+		
+		//供外部调用的方法
+		$.fn.w_getAllProduct = function(partproductname){
+			let data = {};
+			if (partproductname == ''){
+				data = {"pageSize":pageSize,"currPage":currPage};
+			} else {
+				data = {"pageSize":pageSize,"currPage":currPage,"partProductname":partproductname};
+			}
+			
+			$.ajax({
+				method:'get',
+				url:'http://localhost:8989/getproducts',
+				data:data,
+				success:function(result){					
+					let temp_currPage = currPage;
+					setPage(result);
+					currPage = temp_currPage;
+					$('#currpage').val(currPage);
+					$('#labelcurrpage').text(currPage);
+				}
+			})
+		}
+		$.fn.w_getCurrPageData = function(partproductname){
+			let data = {};
+			if (partproductname == ''){
+				data = {"pageSize":pageSize,"currPage":currPage};
+			} else {
+				data = {"pageSize":pageSize,"currPage":currPage,"partProductname":partproductname};
+			}
+			
+			$.ajax({
+				method:'get',
+				url:'http://localhost:8989/getpageproducts',
+				data:data,
+				success:function(result){
+					if (result.length == 0){
+						if (currPage > 1){
+							currPage--;
+							$('#currpage').val(currPage);
+							$('#labelcurrpage').text(currPage);
+							getCurrPageData();
+						}
+						
+					} else {
+						render(result);
+					}
+					
+				}
+			})
+		}
+		//获取当前页面信息
+		function getCurrPageData(partproductname){
+			let data = {};
+			if (partproductname == ''){
+				data = {"pageSize":pageSize,"currPage":currPage};
+			} else {
+				data = {"pageSize":pageSize,"currPage":currPage,"partProductname":partproductname};
+			}
+			//console.log();
+			$.ajax({
+				method:'get',
+				url:'http://localhost:8989/getpageproducts',
+				data:data,
+				success:function(result){
+					render(result);
+				}
+			})
+		}
+		//打开添加商品界面
+		$('#btn-addproduct').on('click',function(){
+			$('.cover').show();
+			$('.addproduct').show();
+			$('#productid').text('');
+		})
+		//取消添加商品
+		$('#btn-productaddclose').on('click',function(){
+			$('.cover').hide();
+			$('.addproduct').hide();
+		})
+		//添加或者修改商品
+		$('#btn-productadd').on('click',function(){
+			let productId = $('#productid').text();
+			
+			let productName = $('#productname').val();
+			let productSpec = $('#productspec').val();
+			let productUnit = $('#productunit').val();
+			let productPrice = $('#productprice').val();
+			let productStock = $('#productstock').val();
+			let productCompany = $('#productcompany').val();
+			
+			let searchContent = $('#partproductname').val();
+			if (productId == ""){
+				//表示新增商品
+				let data = {
+					productName:productName,
+					productSpec:productSpec,
+					productUnit:productUnit,
+					productPrice:productPrice,
+					productStock:productStock,
+					productCompany:productCompany
+				};
+				
+				$.ajax({
+					method:'get',
+					url:'http://localhost:8989/addproduct',
+					data:data,
+					success:function(result){
+						console.log(result);
+						if (result.result.n == 1){
+							//重新获取商品信息
+						   getAllProduct(searchContent);						
+						   getCurrPageData(searchContent);
+						}					
+					}
+				})
+			} else {
+				//表示编辑商品
+				let data = {
+					productId:productId,
+					productName:productName,
+					productSpec:productSpec,
+					productUnit:productUnit,
+					productPrice:productPrice,
+					productStock:productStock,
+					productCompany:productCompany
+				};
+				
+				$.ajax({
+					method:'get',
+					url:'http://localhost:8989/updproduct',
+					data:data,
+					success:function(result){
+						//console.log(result);
+						if (result.result.n == 1){
+							getCurrPageData(searchContent);
+						}
+					}
+				})
+			}
+			
+			$('.cover').hide();
+			$('.addproduct').hide();
+		})
+		//修改用户密码
+		$('#btn-updupd').on('click',function(){
+			let userName = $('#updusername').val();
+			let password = $('#updorgpassword').val();
+			let newPassword = $('#updnewpassword').val();
+			let newConfirmPassword = $('#updconfirmpassword').val();
+			if (password == ""){
+				alert("请输入原密码!");
+				return;
+			}
+			if (newPassword == ""){
+				alert("请输入新密码!");
+				return;
+			}
+			if (newPassword.length < 6){
+				alert("新密码长度不能小于6!");
+				return;
+			}
+			if (newPassword != newConfirmPassword){
+				alert("您的新密码没有确认!");
+				return;
+			}
+			
+			let data = {"username":userName,"password":password,"newPassword":newPassword};
+			$.ajax({
+				method:"post",
+				url:'http://localhost:8989/updpass',
+				data:data,
+				success:function(result){
+					console.log(result);
+					if (result.Code == "200"){
+						location.href = "http://localhost:8989/";
+					} else {
+						alert(result.msg);
+					}
+				}
+			})
+		})
+		//取消修改用户密码
+		$('#btn-updclose').on('click',function(){
+			$('.cover').hide();
+			$('.upd').hide();
+		})
+		//打开用户修改密码界面
+		$('#btn-updpass').on('click',function(){
+			$('.cover').show();
+			$('.upd').show();
+			
+			let userName = $('#username').text().trim();
+			$('#updusername').val(userName);
+		})
+		//取消登录
+		$('#btn-logout').on('click',function(){
+			let userName = $('#username').text().trim();
+			console.log(userName);
+			let data = {"username":userName};
+			$.ajax({
+				method:'get',
+				url:'http://localhost:8989/dellogin',
+				data:data,
+				success:function(result){
+					console.log(result);
+					if (result.Code=="200"){
+						location.href="http://localhost:8989/";
+					}
+				}
+			})
+		})
+		//注销用户
+		$('#btn-removeuser').on('click',function(){
+			let userName = $('#username').text().trim();
+			console.log(userName);
+			let data = {"username":userName};
+			$.ajax({
+				method:'get',
+				url:'http://localhost:8989/removeuser',
+				data:data,
+				success:function(result){
+					console.log(result);
+					if (result.Code=="200"){
+						location.href="http://localhost:8989/";
+					}
+				}
+			})
+		})
+		//上一页
+		$('#prevpage').on('click',function(){
+			let searchContent = $('#partproductname').val();
+			if (currPage <= 1){
+				alert('这已经是第一页了！');
+				return;
+			} else {
+				currPage--;
+				getCurrPageData(searchContent);
+				$('#currpage').val(currPage);
+				$('#labelcurrpage').text(currPage);
+			}
+			
+		})
+		//下一页
+		$('#nextpage').on('click',function(){
+			let searchContent = $('#partproductname').val();
+			if (currPage >= totalPage){
+				alert('这已经是最后一页了！');
+				return;
+			} else {
+				currPage++;
+				getCurrPageData(searchContent);
+				$('#currpage').val(currPage);
+				$('#labelcurrpage').text(currPage);
+			}
+		})
+		//指定页面
+		$('#currpage').on('keydown',function(e){
+			if (e.keyCode == 13) {
+				let searchContent = $('#partproductname').val();
+				let currPage_temp = $('#currpage').val();
+				if (currPage_temp <= 1){
+					alert('只能输入大于0的正整数！');
+					$('#currpage').val(currPage);
+					$('#labelcurrpage').text(currPage);
+					return;
+				} else if(currPage_temp > totalPage) {
+					alert('不能超过最大页数！');
+					$('#currpage').val(currPage);
+					$('#labelcurrpage').text(currPage);
+					return;
+				} else {
+					currPage = currPage_temp;
+					$('#labelcurrpage').text(currPage);
+					getCurrPageData(searchContent);
+				}
+			}
+		})
+		//指定页面输入框失去焦点时
+		$('#currpage').blur(function(){
+			let searchContent = $('#partproductname').val();
+			let currPage_temp = $('#currpage').val();
+			if (currPage_temp <= 1){
+				alert('只能输入大于0的正整数！');
+				$('#currpage').val(currPage);
+				$('#labelcurrpage').text(currPage);
+				return;
+			} else if(currPage_temp > totalPage) {
+				alert('不能超过最大页数！');
+				$('#currpage').val(currPage);
+				$('#labelcurrpage').text(currPage);
+				return;
+			} else {
+				currPage = currPage_temp;
+				$('#labelcurrpage').text(currPage);
+				getCurrPageData(searchContent);
+			}
+		})
+		//指定页数
+		$('#goto').on('click',function(){
+			let searchContent = $('#partproductname').val();
+			let currPage_temp = $('#currpage').val();
+			if (currPage_temp <= 1){
+				alert('只能输入大于0的正整数！');
+				$('#currpage').val(currPage);
+				$('#labelcurrpage').text(currPage);
+				return;
+			} else if(currPage_temp > totalPage) {
+				alert('不能超过最大页数！');
+				$('#currpage').val(currPage);
+				$('#labelcurrpage').text(currPage);
+				return;
+			} else {
+				currPage = currPage_temp;
+				$('#labelcurrpage').text(currPage);
+				getCurrPageData(searchContent);
+			}
+		})
+		//搜索商品
+		$('#btn-searchproduct').on('click',function(){
+			let searchContent = $('#partproductname').val();
+			console.log(searchContent);
+			getAllProduct(searchContent);						
+			getCurrPageData(searchContent);
+		})
+		//打开聊天室
+		$('#btn-chat').on('click',function(){
+			$('.chat').show();
+			//$('.cover').show();
+		})
+		//关闭聊天室
+		$('#btn-chatclose').on('click',function(){
+			$('.chat').hide();
+			//$('.cover').hide();
+		})
+		//发送消息
+		$('#btn-sendmsg').on('click',function(){
+			let msg = $('#sendmsg').val().trim();
+			if (msg == ''){
+				alert('发送的消息不能为空！');
+				return;
+			}
+			let userName = $('#username').text();
+			// 发送数据 socket.emit('和后台保持一致的事件',{k:v数据})
+			socket.emit('chat',{msg:msg,user:userName});
+			$('#sendmsg').val('');
+		})
+		//接收消息
+		socket.on('send',(msg)=>{
+			let loginUser = $('#username').text();
+			let userName = msg.user;
+			let content = msg.msg;
+			
+			let tag = $('<li></li>');
+			tag.text(userName+":"+content);
+			if (userName == loginUser){
+				tag.css('text-align','right');
+			}
+			
+			$('#chatcontent').append(tag);
+			$('#chatcontent').scrollTop(($('#chatcontent').find('li').height()) * ($('#chatcontent').find('li').length));
+		})
+	})
+</script>

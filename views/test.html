@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	let date = new Date();
+	let year = date.getFullYear();
+	let month = (date.getMonth() + 1>9)?(''+(date.getMonth()+1)):('0'+(date.getMonth()+1));
+	let day = (date.getDate()>9)?(''+date.getDate()):('0'+date.getDate());
+	let hour = (date.getHours()>9)?(''+date.getHours()):('0'+date.getHours())
+	let minute = (date.getMinutes()>9)?(''+date.getMinutes()):('0'+date.getMinutes());
+	let second = (date.getSeconds()>9)?(''+date.getSeconds()):('0'+date.getSeconds());
+	let perfectTime = `${year}-${month}-${day}:${hour}:${minute}:${second}`;//year +'-'+month+'-'day+' '+hour+':'+minute+':'+second;
+	
+	console.log(perfectTime);
+</script>

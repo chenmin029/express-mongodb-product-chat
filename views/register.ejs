@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.container{
+				width: 300px;
+				height: 300px;
+				margin: 100px auto;
+			}
+			
+			.user,.pass,.opearte{
+				width: 300px;
+				height: 40px;
+				line-height: 40px;
+				
+				text-align: right;
+			}
+			
+			.opearte{
+				text-align: right;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="user">
+				<label>账号：</label>
+				<input id="username" type="text" placeholder="请输入登录账号" />
+			</div>
+			<div class="pass">
+				<label>密码：</label>
+				<input id="password" type="password" placeholder="请输入登录密码" />
+			</div>
+			<div class="pass">
+				<label>确认密码：</label>
+				<input id="confirmpassword" type="password" placeholder="请输入确认密码" />
+			</div>
+			<div class="opearte">
+				<button id="register" type="button">注册</button>
+				<button id="reset" type="button">重置</button>
+				<a href="http://localhost:8989/">已有账号，登录</a>
+			</div>
+			
+		</div>
+	</body>
+</html>
+<script src="../public/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#register').on('click',function(){			
+			var username = $('#username').val();
+			var password = $('#password').val();
+			var confirmpassword = $('#confirmpassword').val();
+			// console.log(password,password.length);
+			if (username == "" || username == undefined){
+				alert("账号不能为空！");
+				return;
+			}
+			if (username.length<6 || username.length > 12){
+				alert("账号的长度不在6到12之间")
+				return;
+			}
+			var regex=/^\w+$/;
+			let checkFormat = regex.test(username);
+			if (checkFormat == false){
+				alert('用户名只能是数字、字母或者下划线组成');
+				return;
+			}
+			if (password == "" || password == undefined){
+				alert("密码不能为空！");
+				return;
+			}
+			if (password.length <6){
+				alert("密码长度必须大于6位！");
+				return;
+			}
+			if (password != confirmpassword){
+				alert("您的密码没有确认！");
+				return;
+			}
+			
+			var data = {"username": username,"password": password};
+			$.ajax({
+				method:'post',
+				url:'http://localhost:8989/reg',
+				data:data,
+				success:function(result){
+					// console.log(result);
+					if (result.Code == "200"){
+						location.href = "http://localhost:8989/";
+					}
+					
+				}
+			})
+		})
+		
+		
+	})
+</script>

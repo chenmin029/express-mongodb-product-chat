@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.container{
+				width: 300px;
+				height: 300px;
+				margin: 200px auto;
+			}
+			
+			.user,.pass,.opearte{
+				width: 300px;
+				height: 40px;
+				line-height: 40px;
+				/* border: 1px solid aqua; */
+				/* margin: 0 auto; */
+			}
+			
+			.opearte{
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="user">
+				<label>账号：</label>
+				<input id="username" type="text" placeholder="请输入登录账号" />
+			</div>
+			<div class="pass">
+				<label>密码：</label>
+				<input id="password" type="password" placeholder="请输入登录密码" />
+			</div>
+			<div class="opearte">
+				<button id="login" type="button">登录</button>
+				<button id="reset" type="button">重置</button>
+				<a href="http://localhost:8989/register">您还没有账号，请注册账号</a>
+			</div>
+			
+		</div>
+	</body>
+</html>
+<script src="../public/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#login').on('click',function(){
+			let username = $('#username').val();
+			let password = $('#password').val();
+			let data = {username:username,password:password};
+			console.log(username);
+			$.ajax({
+				method:'post',
+				url:'http://localhost:8989/login',
+				data:data,
+				success:function(result){
+					console.log(result);
+					if (result.Code == "200"){
+						location.href = "http://localhost:8989/";
+					} else {
+						alert(result.msg);
+					}
+				}
+			})
+		})
+	})
+</script>
